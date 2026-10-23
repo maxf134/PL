@@ -70,7 +70,7 @@ export function createMobileControls(camera, domElement, isEnabled) {
       const right = new THREE.Vector3(fwd.z, 0, -fwd.x);
       const move = new THREE.Vector3()
         .addScaledVector(fwd, -moveZ * speed * dt)
-        .addScaledVector(right, moveX * speed * dt);
+        .addScaledVector(right, -moveX * speed * dt);
       const desired = { x: camera.position.x + move.x, z: camera.position.z + move.z };
       const r = resolveCollisions(desired, { x: camera.position.x, z: camera.position.z }, 0.4);
       camera.position.x = r.x; camera.position.z = r.z;
