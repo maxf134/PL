@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>3D-визуализация сталеплавильного цикла</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #0b0e12; font-family: system-ui, sans-serif; }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+    #hud { position: fixed; left: 12px; top: 12px; color: #e8eef5; font-size: 14px; line-height: 1.4; pointer-events: none; text-shadow: 0 1px 2px #000; max-width: 55vw; }
+    #crosshair { position: fixed; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #fff; opacity: 0.7; pointer-events: none; }
+    #prompt { position: fixed; left: 50%; top: calc(50% + 24px); transform: translateX(-50%); color: #fff; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 6px; font-size: 14px; pointer-events: none; display: none; }
+    #tutorial { position: fixed; left: 12px; top: 68px; color: #fff; background: rgba(78,163,255,0.92); padding: 10px 16px; border-radius: 8px; font-size: 15px; font-weight: 600; pointer-events: none; max-width: 55vw; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: none; }
+    #touch-ui { position: fixed; inset: 0; pointer-events: none; display: none; }
+    #joystick { position: absolute; left: 24px; bottom: 24px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); pointer-events: auto; }
+    #joystick-knob { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: rgba(255,255,255,0.35); pointer-events: none; }
+    #btn-action, #btn-pause { position: absolute; right: 24px; width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-size: 22px; pointer-events: auto; }
+    #btn-action { bottom: 24px; display: none; }
+    #btn-pause  { bottom: 100px; }
+    #panel-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 99; }
+    #panel { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(92vw, 520px); max-height: 90vh; overflow-y: auto; background: rgba(14,18,24,0.97); border: 1px solid #2a3340; border-radius: 12px; padding: 18px; color: #e8eef5; display: none; z-index: 100; }
+    #panel h2 { margin: 0 0 10px; font-size: 18px; }
+    #panel .phase-list { list-style: none; padding: 0; margin: 8px 0 14px; }
+    #panel .phase-list li { padding: 4px 8px; border-radius: 4px; margin: 2px 0; font-size: 13px; color: #9aa8b8; border-left: 3px solid transparent; }
+    #panel .phase-list li.active { color: #fff; background: #1c2430; border-left-color: #4ea3ff; }
+    #panel .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    #panel button { flex: 1 1 45%; padding: 10px; border-radius: 8px; border: 1px solid #33475e; background: #1a2230; color: #e8eef5; font-size: 14px; cursor: pointer; }
+    #panel button:hover { background: #24304a; }
+    #panel .close { position: absolute; right: 12px; top: 10px; background: transparent; border: none; font-size: 22px; color: #8899aa; cursor: pointer; }
+    /* PIP */
+    #pip-frame { position: fixed; top: 12px; right: 12px; width: 280px; height: 200px; border: 2px solid #4ea3ff; border-radius: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.6); z-index: 5; }
+    #pip-frame::before { content: 'Камера процесса'; position: absolute; top: -22px; left: 0; color: #4ea3ff; font-size: 12px; font-weight: 600; text-shadow: 0 1px 2px #000; }
+    @media (max-width: 768px) {
+      #pip-frame { width: 160px; height: 120px; }
+      #pip-frame::before { font-size: 10px; top: -18px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="hud">Загрузка…</div>
+  <div id="tutorial"></div>
+  <div id="crosshair"></div>
+  <div id="prompt"></div>
+  <div id="pip-frame"></div>
+  <div id="touch-ui">
+    <div id="joystick"><div id="joystick-knob"></div></div>
+    <button id="btn-pause">⏸</button>
+    <button id="btn-action">F</button>
+  </div>
+  <div id="panel-backdrop"></div>
+  <div id="panel">
+    <button class="close" id="panel-close">×</button>
+    <h2>Пульт управления</h2>
+    <div id="panel-phase-name" style="color:#4ea3ff;font-size:14px;margin-bottom:8px;">—</div>
+    <ul class="phase-list" id="phase-list"></ul>
+    <div class="btn-row">
+      <button id="btn-start">▶ Старт</button>
+      <button id="btn-toggle">⏸ Пауза</button>
+      <button id="btn-next">⏭ Следующая</button>
+      <button id="btn-reset">⟲ Сброс</button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

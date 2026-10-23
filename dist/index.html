@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>3D-визуализация сталеплавильного цикла</title>
+  <style>html,body{background:#0b0e12;height:100%;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;overflow:hidden}#app{position:fixed;top:0;bottom:0;left:0;right:0}canvas{display:block}#hud{color:#e8eef5;pointer-events:none;text-shadow:0 1px 2px #000;max-width:55vw;font-size:14px;line-height:1.4;position:fixed;top:12px;left:12px}#crosshair{opacity:.7;pointer-events:none;background:#fff;border-radius:50%;width:6px;height:6px;margin:-3px 0 0 -3px;position:fixed;top:50%;left:50%}#prompt{color:#fff;pointer-events:none;background:#0009;border-radius:6px;padding:6px 12px;font-size:14px;display:none;position:fixed;top:calc(50% + 24px);left:50%;transform:translate(-50%)}#tutorial{color:#fff;pointer-events:none;background:#4ea3ffeb;border-radius:8px;max-width:55vw;padding:10px 16px;font-size:15px;font-weight:600;display:none;position:fixed;top:68px;left:12px;box-shadow:0 4px 12px #00000080}#touch-ui{pointer-events:none;display:none;position:fixed;top:0;bottom:0;left:0;right:0}#joystick{pointer-events:auto;background:#ffffff14;border:1px solid #ffffff40;border-radius:50%;width:120px;height:120px;position:absolute;bottom:24px;left:24px}#joystick-knob{pointer-events:none;background:#ffffff59;border-radius:50%;width:48px;height:48px;margin:-24px 0 0 -24px;position:absolute;top:50%;left:50%}#btn-action,#btn-pause{color:#fff;pointer-events:auto;background:#ffffff26;border:1px solid #ffffff4d;border-radius:50%;width:64px;height:64px;font-size:22px;position:absolute;right:24px}#btn-action{display:none;bottom:24px}#btn-pause{bottom:100px}#panel-backdrop{z-index:99;background:#00000080;display:none;position:fixed;top:0;bottom:0;left:0;right:0}#panel{color:#e8eef5;z-index:100;background:#0e1218f7;border:1px solid #2a3340;border-radius:12px;width:min(92vw,520px);max-height:90vh;padding:18px;display:none;position:fixed;top:50%;left:50%;overflow-y:auto;transform:translate(-50%,-50%)}#panel h2{margin:0 0 10px;font-size:18px}#panel .phase-list{margin:8px 0 14px;padding:0;list-style:none}#panel .phase-list li{color:#9aa8b8;border-left:3px solid #0000;border-radius:4px;margin:2px 0;padding:4px 8px;font-size:13px}#panel .phase-list li.active{color:#fff;background:#1c2430;border-left-color:#4ea3ff}#panel .btn-row{flex-wrap:wrap;gap:8px;display:flex}#panel button{color:#e8eef5;cursor:pointer;background:#1a2230;border:1px solid #33475e;border-radius:8px;flex:45%;padding:10px;font-size:14px}#panel button:hover{background:#24304a}#panel .close{color:#89a;cursor:pointer;background:0 0;border:none;font-size:22px;position:absolute;top:10px;right:12px}#pip-frame{pointer-events:none;z-index:5;border:2px solid #4ea3ff;border-radius:6px;width:280px;height:200px;position:fixed;top:12px;right:12px;box-shadow:0 4px 12px #0009}#pip-frame:before{content:"Камера процесса";color:#4ea3ff;text-shadow:0 1px 2px #000;font-size:12px;font-weight:600;position:absolute;top:-22px;left:0}@media (max-width:768px){#pip-frame{width:160px;height:120px}#pip-frame:before{font-size:10px;top:-18px}}</style>
+  <script type="module" crossorigin src="/assets/index-DpkCbOSr.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="hud">Загрузка…</div>
+  <div id="tutorial"></div>
+  <div id="crosshair"></div>
+  <div id="prompt"></div>
+  <div id="pip-frame"></div>
+  <div id="touch-ui">
+    <div id="joystick"><div id="joystick-knob"></div></div>
+    <button id="btn-pause">⏸</button>
+    <button id="btn-action">F</button>
+  </div>
+  <div id="panel-backdrop"></div>
+  <div id="panel">
+    <button class="close" id="panel-close">×</button>
+    <h2>Пульт управления</h2>
+    <div id="panel-phase-name" style="color:#4ea3ff;font-size:14px;margin-bottom:8px;">—</div>
+    <ul class="phase-list" id="phase-list"></ul>
+    <div class="btn-row">
+      <button id="btn-start">▶ Старт</button>
+      <button id="btn-toggle">⏸ Пауза</button>
+      <button id="btn-next">⏭ Следующая</button>
+      <button id="btn-reset">⟲ Сброс</button>
+    </div>
+  </div>
+</body>
+</html>
