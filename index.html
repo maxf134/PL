@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>3D-визуализация сталеплавильного цикла</title>
-  <style>
+    <style>
     html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #0b0e12; font-family: system-ui, sans-serif; }
     #app { position: fixed; inset: 0; }
     canvas { display: block; }
     #hud { position: fixed; left: 12px; top: 12px; color: #e8eef5; font-size: 14px; line-height: 1.4; pointer-events: none; text-shadow: 0 1px 2px #000; max-width: 55vw; }
+    #tutorial { position: fixed; left: 12px; top: 68px; color: #fff; background: rgba(78,163,255,0.92); padding: 10px 16px; border-radius: 8px; font-size: 15px; font-weight: 600; pointer-events: none; max-width: 55vw; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: none; }
     #crosshair { position: fixed; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #fff; opacity: 0.7; pointer-events: none; }
     #prompt { position: fixed; left: 50%; top: calc(50% + 24px); transform: translateX(-50%); color: #fff; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 6px; font-size: 14px; pointer-events: none; display: none; }
-    #tutorial { position: fixed; left: 12px; top: 68px; color: #fff; background: rgba(78,163,255,0.92); padding: 10px 16px; border-radius: 8px; font-size: 15px; font-weight: 600; pointer-events: none; max-width: 55vw; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: none; }
     #touch-ui { position: fixed; inset: 0; pointer-events: none; display: none; }
     #joystick { position: absolute; left: 24px; bottom: 24px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); pointer-events: auto; }
     #joystick-knob { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: rgba(255,255,255,0.35); pointer-events: none; }
@@ -28,12 +28,22 @@
     #panel button { flex: 1 1 45%; padding: 10px; border-radius: 8px; border: 1px solid #33475e; background: #1a2230; color: #e8eef5; font-size: 14px; cursor: pointer; }
     #panel button:hover { background: #24304a; }
     #panel .close { position: absolute; right: 12px; top: 10px; background: transparent; border: none; font-size: 22px; color: #8899aa; cursor: pointer; }
-    /* PIP */
+    
     #pip-frame { position: fixed; top: 24px; right: 12px; width: 288px; height: 162px; border: 2px solid #4ea3ff; border-radius: 6px; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.6); z-index: 5; }
     #pip-frame::before { content: 'Камера процесса'; position: absolute; top: -22px; left: 0; color: #4ea3ff; font-size: 12px; font-weight: 600; text-shadow: 0 1px 2px #000; }
+
+    /* НОВЫЕ СТИЛИ ДЛЯ СМАРТФОНОВ */
     @media (max-width: 768px) {
-      #pip-frame { width: 160px; height: 90px; }
+      #hud { font-size: 11px; top: 8px; left: 8px; }
+      #tutorial { font-size: 12px; padding: 8px 12px; top: 50px; left: 8px; }
+      #btn-action, #btn-pause { width: 48px; height: 48px; font-size: 18px; right: 16px; }
+      #btn-action { bottom: 16px; }
+      #btn-pause { bottom: 76px; }
+      #joystick { width: 100px; height: 100px; left: 16px; bottom: 16px; }
+      #joystick-knob { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+      #pip-frame { width: 160px; height: 90px; top: 20px; right: 8px; }
       #pip-frame::before { font-size: 10px; top: -18px; }
+      #prompt { font-size: 12px; }
     }
   </style>
 </head>

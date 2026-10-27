@@ -67,7 +67,10 @@ export function createMobileControls(camera, domElement, isEnabled) {
     if (Math.abs(moveX) > 0.01 || Math.abs(moveZ) > 0.01) {
       const speed = 5;
       const fwd = new THREE.Vector3(-Math.sin(camera.rotation.y), 0, -Math.cos(camera.rotation.y));
-      const right = new THREE.Vector3(fwd.z, 0, -fwd.x);
+      
+      // ИСПРАВЛЕНО: Вектор "вправо" теперь считается правильно (было fwd.z, 0, -fwd.x)
+      const right = new THREE.Vector3(-fwd.z, 0, fwd.x);
+      
       const move = new THREE.Vector3()
         .addScaledVector(fwd, -moveZ * speed * dt)
         .addScaledVector(right, moveX * speed * dt);
@@ -76,8 +79,7 @@ export function createMobileControls(camera, domElement, isEnabled) {
       camera.position.x = r.x; camera.position.z = r.z;
     }
     
-    // Используем функцию для высоты (подъем по лестнице)
-    camera.position.y = 1.7;
+    camera.position.y = getFloorHeight(camera.position.x, camera.position.z);
 
     promptTarget = null;
     let bestDist = Infinity;
