@@ -3,6 +3,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { LAYOUT } from './layout.js';
 
 const loader = new GLTFLoader();
+// Автоматически подставляет /PL/ на GitHub Pages и / локально
+const base = import.meta.env.BASE_URL;
 
 function loadModel(url) {
   return new Promise((resolve, reject) => {
@@ -21,16 +23,16 @@ export async function loadAllModels(scene) {
     eafGltf, lfGltf, ccmGltf, craneGltf, ladleGltf,
     bucketGltf, rollerGltf, deskGltf, carGltf, tundishGltf
   ] = await Promise.all([
-    loadModel('/models/eaf.glb'),
-    loadModel('/models/ladle_furnace.glb'),
-    loadModel('/models/ccm.glb'),
-    loadModel('/models/crane.glb'),
-    loadModel('/models/ladle.glb'),
-    loadModel('/models/scrap_bucket.glb'),
-    loadModel('/models/roller_table.glb'),
-    loadModel('/models/control_desk.glb'),
-    loadModel('/models/ladle_car.glb'),
-    loadModel('/models/tundish.glb')
+    loadModel(`${base}models/eaf.glb`),
+    loadModel(`${base}models/ladle_furnace.glb`),
+    loadModel(`${base}models/ccm.glb`),
+    loadModel(`${base}models/crane.glb`),
+    loadModel(`${base}models/ladle.glb`),
+    loadModel(`${base}models/scrap_bucket.glb`),
+    loadModel(`${base}models/roller_table.glb`),
+    loadModel(`${base}models/control_desk.glb`),
+    loadModel(`${base}models/ladle_car.glb`),
+    loadModel(`${base}models/tundish.glb`)
   ]);
 
   const handleL = findNode(craneGltf, 'handle_L');
