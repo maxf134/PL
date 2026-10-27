@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
-import { resolveCollisions } from '../systems/collisions.js';
+import { resolveCollisions, getFloorHeight } from '../systems/collisions.js';
 
 export function createFPSControls(camera, domElement, isEnabled) {
   const controls = new PointerLockControls(camera, domElement);
@@ -42,6 +42,8 @@ export function createFPSControls(camera, domElement, isEnabled) {
       camera.position.x = r.x;
       camera.position.z = r.z;
     }
+    
+    // Используем функцию для высоты (подъем по лестнице)
     camera.position.y = 1.7;
 
     raycaster.setFromCamera({ x: 0, y: 0 }, camera);

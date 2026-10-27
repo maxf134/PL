@@ -1,11 +1,11 @@
 export const LAYOUT = {
-  hall: { w: 80, d: 60 },
+  hall: { w: 80, d: 90 },
   eaf: { x: -25, y: 0, z: 0, w: 8, h: 12, d: 8 },
   lf:  { x: -6,  y: 0, z: 0, w: 6, h: 10, d: 6 },
   ccm: { x: 12,  y: 0, z: 0, w: 10, h: 12, d: 30 },
-  rails: { x1: -20, x2: 2, z: 0 },
-  crane: { spanZ: 8, y: 16, travelX: { min: -32, max: 5 } },
-  ladleStart: { x: -19, y: 1.0, z: 0 },
+  rails: { x1: -20, x2: 6, z: 0 },
+  crane: { spanZ: 28, y: 26, travelX: { min: -32, max: 5 } },
+  ladleStart: { x: -19, y: 1.0, z: 0 }, // 1.0 — это высота платформы сталевоза
   bucketPark: { x: -20, y: 1.5, z: 8 },
   desk: { x: -14, y: 0, z: 12 },
   roller: { x: 12, z1: 15, z2: 30 },

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { resolveCollisions } from '../systems/collisions.js';
+import { resolveCollisions, getFloorHeight } from '../systems/collisions.js';
 
 export function createMobileControls(camera, domElement, isEnabled) {
   camera.position.set(-14, 1.7, 16);
@@ -70,11 +70,13 @@ export function createMobileControls(camera, domElement, isEnabled) {
       const right = new THREE.Vector3(fwd.z, 0, -fwd.x);
       const move = new THREE.Vector3()
         .addScaledVector(fwd, -moveZ * speed * dt)
-        .addScaledVector(right, -moveX * speed * dt);
+        .addScaledVector(right, moveX * speed * dt);
       const desired = { x: camera.position.x + move.x, z: camera.position.z + move.z };
       const r = resolveCollisions(desired, { x: camera.position.x, z: camera.position.z }, 0.4);
       camera.position.x = r.x; camera.position.z = r.z;
     }
+    
+    // Используем функцию для высоты (подъем по лестнице)
     camera.position.y = 1.7;
 
     promptTarget = null;
