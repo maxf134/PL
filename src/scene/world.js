@@ -140,24 +140,38 @@ export async function createWorld(scene) {
     models.ccm.group.add(streamA);
     models.ccm.streamA = streamA;
   }
-  if (!models.ccm.streamB) {
-    const sB = new THREE.MeshBasicMaterial({ color: 0xff9933, transparent: true, opacity: 0 });
-    const streamB = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 5.2, 8), sB);
-    streamB.position.set(0, 3.6, -12);
-    models.ccm.group.add(streamB);
-    models.ccm.streamB = streamB;
+    // 1 струя из стального ковша в промежуточный ковш (остается без изменений)
+  if (!models.ccm.streamA) {
+    const sA = new THREE.MeshBasicMaterial({ color: 0xffaa33, transparent: true, opacity: 0 });
+    const streamA = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 3.6, 8), sA);
+    streamA.position.set(0, 9.2, -12);
+    models.ccm.group.add(streamA);
+    models.ccm.streamA = streamA;
   }
+
+  // Создаем 3 заготовки и 3 струи (разливка через промежуточный ковш)
+  models.ccm.billets = [];
+  models.ccm.streamsB = [];
   
-  if (!models.ccm.billet) {
-    const bMat = new THREE.MeshStandardMaterial({ color: 0x8a2a12, emissive: 0x6a1a08, emissiveIntensity: 0.8 });
+  const bMat = new THREE.MeshStandardMaterial({ color: 0x8a2a12, emissive: 0x6a1a08, emissiveIntensity: 0.8 });
+  const sBMat = new THREE.MeshBasicMaterial({ color: 0xff9933, transparent: true, opacity: 0 });
+  const billetsX = [-1.5, 0, 1.5]; // Смещение по X для 3 ручьев
+
+  billetsX.forEach((bx) => {
+    // Заготовка
     const billet = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.6, 1), bMat);
     billet.visible = false;
-    billet.position.y = 1.5; 
+    billet.position.set(bx, 1.5, -12); // Высота на рельсах
     models.ccm.group.add(billet);
-    models.ccm.billet = billet;
-  } else {
-    models.ccm.billet.position.y = 1.5; 
-  }
+    models.ccm.billets.push(billet);
+
+    // Струя из промежуточного ковша в заготовку
+    const streamB = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 5.2, 8), sBMat);
+    streamB.position.set(bx, 3.6, -12);
+    streamB.visible = false;
+    models.ccm.group.add(streamB);
+    models.ccm.streamsB.push(streamB);
+  });
 
   if (!models.bucket.capPivot) {
     const pivot = new THREE.Group();

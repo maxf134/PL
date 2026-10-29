@@ -37,15 +37,15 @@ export async function loadAllModels(scene) {
 
   const handleL = findNode(craneGltf, 'handle_L');
   const handleR = findNode(craneGltf, 'handle_R');
-  if (handleL) handleL.rotation.y = -Math.PI / 2; 
-  if (handleR) handleR.rotation.y = Math.PI / 2;
+  if (handleL) handleL.rotation.y = Math.PI ; 
+  if (handleR) handleR.rotation.y = Math.PI;
 
   // --- ПОЗИЦИОНИРОВАНИЕ ---
   eafGltf.position.set(LAYOUT.eaf.x, LAYOUT.eaf.y, LAYOUT.eaf.z);
   
   const lfContainer = new THREE.Group();
   lfContainer.position.set(LAYOUT.lf.x, LAYOUT.lf.y, LAYOUT.lf.z);
-  lfContainer.rotation.y = -Math.PI / 2;
+  lfContainer.rotation.y = 0;
   lfGltf.position.set(0, 0, 0); 
   lfContainer.add(lfGltf);
 
@@ -87,7 +87,7 @@ export async function loadAllModels(scene) {
     },
     ccm: {
       group: ccmGltf,
-      billet: findNode(ccmGltf, 'billet')
+      billet: null 
     },
     crane: {
       group: craneGltf,

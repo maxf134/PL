@@ -102,7 +102,7 @@ export function createCycle(world) {
       else { s.roofSwing = 0; s.electrodesUp = 0; }
 
       const parkX = LAYOUT.bucketPark.x;
-      const parkZ = LAYOUT.bucketPark.z - 0.5; 
+      const parkZ = LAYOUT.bucketPark.z - 1.5; 
       const eafX = LAYOUT.eaf.x, eafZ = LAYOUT.eaf.z;
 
       if (t < 0.10) {
@@ -226,57 +226,57 @@ export function createCycle(world) {
       s.molten = 1; s.steamLadle = 1; s.steamLf = 0; s.grabOffset = 0;
     }},
 
-    { name: '9. Кран несёт ковш к МНЛЗ', duration: 16, apply(s, s0, t) {
+        { name: '9. Кран несёт ковш к МНЛЗ', duration: 16, apply(s, s0, t) {
       s.molten = 1; s.steamLadle = 1; s.steamLf = 0;
 
       if (t < 0.10) {
         const e = easeInOut(t / 0.10);
         s.craneX = lerp(s0.craneX, pickupX, e);
-        s.craneZ = lerp(s0.craneZ, pickupZ - 0.5, e);
+        s.craneZ = lerp(s0.craneZ, pickupZ - 1.5, e); // 1.5
         s.hookY = TRAVEL_Y;
         s.grabOffset = 0;
         s.ladleX = pickupX; s.ladleY = 1.0; s.ladleZ = pickupZ;
       } else if (t < 0.20) {
         const e = easeInOut((t - 0.10) / 0.10);
-        s.craneX = pickupX; s.craneZ = pickupZ - 0.5;
+        s.craneX = pickupX; s.craneZ = pickupZ - 1.5; // 1.5
         s.hookY = lerp(TRAVEL_Y, 4.05, e);
         s.grabOffset = 0;
         s.ladleX = pickupX; s.ladleY = 1.0; s.ladleZ = pickupZ;
       } else if (t < 0.28) {
         const e = easeInOut((t - 0.20) / 0.08);
-        s.craneX = pickupX; s.craneZ = pickupZ - 0.5;
+        s.craneX = pickupX; s.craneZ = pickupZ - 1.5; // 1.5
         s.hookY = 4.05;
         s.grabOffset = e;
         s.ladleX = pickupX; s.ladleY = 1.0; s.ladleZ = pickupZ;
       } else if (t < 0.40) {
         const e = easeInOut((t - 0.28) / 0.12);
-        s.craneX = pickupX; s.craneZ = pickupZ - 0.5;
+        s.craneX = pickupX; s.craneZ = pickupZ - 1.5; // 1.5
         s.hookY = lerp(4.05, TRAVEL_Y, e);
         s.grabOffset = 1;
-        s.ladleX = s.craneX; s.ladleY = s.hookY - 3.05; s.ladleZ = s.craneZ + 0.5;
+        s.ladleX = s.craneX; s.ladleY = s.hookY - 3.05; s.ladleZ = s.craneZ + 1.5; // 1.5
       } else if (t < 0.85) {
         const ct = (t - 0.40) / 0.45;
         
         if (ct < 0.3) {
           const e = easeInOut(ct / 0.3);
           s.craneX = lerp(pickupX, ccmPour.x, e);
-          s.craneZ = pickupZ - 0.5;
+          s.craneZ = pickupZ - 1.5; // 1.5
           s.hookY = TRAVEL_Y;
         } else if (ct < 0.7) {
           const e = easeInOut((ct - 0.3) / 0.4);
           s.craneX = ccmPour.x;
-          s.craneZ = lerp(pickupZ - 0.5, ccmPour.z - 0.5, e);
+          s.craneZ = lerp(pickupZ - 1.5, ccmPour.z - 1.5, e); // 1.5
           s.hookY = TRAVEL_Y;
         } else {
           const e = easeInOut((ct - 0.7) / 0.3);
           s.craneX = ccmPour.x;
-          s.craneZ = ccmPour.z - 0.5;
+          s.craneZ = ccmPour.z - 1.5; // 1.5
           s.hookY = lerp(TRAVEL_Y, CCM_HOOK_Y, e); 
         }
         s.grabOffset = 1;
-        s.ladleX = s.craneX; s.ladleY = s.hookY - 3.05; s.ladleZ = s.craneZ + 0.5;
+        s.ladleX = s.craneX; s.ladleY = s.hookY - 3.05; s.ladleZ = s.craneZ + 1.5; // 1.5
       } else {
-        s.craneX = ccmPour.x; s.craneZ = ccmPour.z - 0.5;
+        s.craneX = ccmPour.x; s.craneZ = ccmPour.z - 1.5; // 1.5
         s.hookY = CCM_HOOK_Y;
         s.grabOffset = 1;
         s.ladleX = ccmPour.x; s.ladleY = CCM_HOOK_Y - 3.05; s.ladleZ = ccmPour.z;
@@ -285,7 +285,7 @@ export function createCycle(world) {
 
     { name: '10. Разливка на МНЛЗ', duration: 10, apply(s, s0, t) {
       s.molten = 1; s.steamLadle = 0.7; s.steamLf = 0;
-      s.craneX = ccmPour.x; s.craneZ = ccmPour.z - 0.5;
+      s.craneX = ccmPour.x; s.craneZ = ccmPour.z - 1.5;
       s.hookY = CCM_HOOK_Y; s.grabOffset = 1;
       s.ladleX = ccmPour.x; s.ladleY = CCM_HOOK_Y - 3.05; s.ladleZ = ccmPour.z;
 
@@ -354,7 +354,7 @@ export function createCycle(world) {
     }
 
     if (state.bucketAttached) {
-      world.bucket.group.position.set(state.craneX, state.hookY - 1.5, state.craneZ + 0.5);
+      world.bucket.group.position.set(state.craneX, state.hookY - 1.5, state.craneZ + 1.5);
     } else {
       world.bucket.group.position.set(LAYOUT.bucketPark.x, BUCKET_PARK_Y, LAYOUT.bucketPark.z);
     }
@@ -402,25 +402,34 @@ export function createCycle(world) {
       world.pourStream.visible = false;
     }
 
+        // Обновление 3-х заготовок
     const rearZ = -12;
     const L = state.billetFront - rearZ;
-    if (L < 0.05) {
-      if (world.ccm.billet) world.ccm.billet.visible = false;
-    } else {
-      if (world.ccm.billet) {
-        world.ccm.billet.visible = true;
-        world.ccm.billet.scale.z = L;
-        world.ccm.billet.position.z = rearZ + L / 2;
-      }
+    
+    if (world.ccm.billets) {
+      world.ccm.billets.forEach((billet) => {
+        if (L < 0.05) {
+          billet.visible = false;
+        } else {
+          billet.visible = true;
+          billet.scale.z = L;
+          billet.position.z = rearZ + L / 2;
+        }
+      });
     }
     
+    // Струя ковш -> промежуточный ковш (1 шт)
     if (world.ccm.streamA) {
       world.ccm.streamA.material.opacity = state.ccmStreamA * 0.9;
       world.ccm.streamA.visible = state.ccmStreamA > 0.01;
     }
-    if (world.ccm.streamB) {
-      world.ccm.streamB.material.opacity = state.ccmStreamB * 0.9;
-      world.ccm.streamB.visible = state.ccmStreamB > 0.01;
+    
+    // Струи промежуточный ковш -> 3 заготовки
+    if (world.ccm.streamsB) {
+      world.ccm.streamsB.forEach((stream) => {
+        stream.material.opacity = state.ccmStreamB * 0.9;
+        stream.visible = state.ccmStreamB > 0.01;
+      });
     }
 
     if (world.steam.ladle) world.steam.ladle.active = state.steamLadle > 0;
